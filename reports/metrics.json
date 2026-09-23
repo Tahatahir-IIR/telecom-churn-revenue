@@ -1,0 +1,184 @@
+{
+  "version": "1.0.0",
+  "trained_at": "2026-09-23T23:31:05.638104+00:00",
+  "rows": 7043,
+  "churn_rate": 0.2654,
+  "cv_folds": 5,
+  "selected_model": "hist_gradient_boosting",
+  "models": {
+    "logistic_regression": {
+      "cv": {
+        "roc_auc": {
+          "mean": 0.8472,
+          "std": 0.0109
+        },
+        "pr_auc": {
+          "mean": 0.661,
+          "std": 0.0142
+        },
+        "f1": {
+          "mean": 0.6277,
+          "std": 0.0216
+        },
+        "recall": {
+          "mean": 0.7926,
+          "std": 0.0347
+        },
+        "precision": {
+          "mean": 0.5198,
+          "std": 0.0174
+        }
+      },
+      "test": {
+        "roc_auc": 0.8452,
+        "pr_auc": 0.6519,
+        "f1": 0.6304,
+        "recall": 0.7273,
+        "precision": 0.5562,
+        "brier": 0.1657,
+        "threshold": 0.5882
+      },
+      "fit_seconds": 2.7
+    },
+    "random_forest": {
+      "cv": {
+        "roc_auc": {
+          "mean": 0.8449,
+          "std": 0.0093
+        },
+        "pr_auc": {
+          "mean": 0.6582,
+          "std": 0.0236
+        },
+        "f1": {
+          "mean": 0.6294,
+          "std": 0.0247
+        },
+        "recall": {
+          "mean": 0.7151,
+          "std": 0.0379
+        },
+        "precision": {
+          "mean": 0.5623,
+          "std": 0.0163
+        }
+      },
+      "test": {
+        "roc_auc": 0.8407,
+        "pr_auc": 0.6505,
+        "f1": 0.6135,
+        "recall": 0.6791,
+        "precision": 0.5595,
+        "brier": 0.1508,
+        "threshold": 0.5315
+      },
+      "fit_seconds": 5.3
+    },
+    "hist_gradient_boosting": {
+      "cv": {
+        "roc_auc": {
+          "mean": 0.8461,
+          "std": 0.0097
+        },
+        "pr_auc": {
+          "mean": 0.6623,
+          "std": 0.0221
+        },
+        "f1": {
+          "mean": 0.6247,
+          "std": 0.0155
+        },
+        "recall": {
+          "mean": 0.7746,
+          "std": 0.033
+        },
+        "precision": {
+          "mean": 0.5238,
+          "std": 0.0111
+        }
+      },
+      "test": {
+        "roc_auc": 0.8445,
+        "pr_auc": 0.6593,
+        "f1": 0.6386,
+        "recall": 0.7086,
+        "precision": 0.5811,
+        "brier": 0.1628,
+        "threshold": 0.6026
+      },
+      "fit_seconds": 3.5
+    },
+    "selected_calibrated": {
+      "base_model": "hist_gradient_boosting",
+      "test": {
+        "roc_auc": 0.8459,
+        "pr_auc": 0.6593,
+        "f1": 0.626,
+        "recall": 0.7005,
+        "precision": 0.5659,
+        "brier": 0.1352,
+        "threshold": 0.3371
+      }
+    }
+  },
+  "revenue": {
+    "horizon_months": 12,
+    "total_monthly_revenue": 456116.6,
+    "total_revenue_at_risk_12m": 3149737.95,
+    "high_risk_customers": 874,
+    "high_risk_revenue_at_risk_12m": 741010.3
+  },
+  "top_features": [
+    {
+      "feature": "contract",
+      "importance_mean": 0.11574672556769758,
+      "importance_std": 0.007191906791335145
+    },
+    {
+      "feature": "tenure",
+      "importance_mean": 0.035584489395231234,
+      "importance_std": 0.0027940845768649938
+    },
+    {
+      "feature": "online_security",
+      "importance_mean": 0.011427962489343713,
+      "importance_std": 0.0016853394210498585
+    },
+    {
+      "feature": "total_charges",
+      "importance_mean": 0.009948719935932382,
+      "importance_std": 0.0017366994936719618
+    },
+    {
+      "feature": "internet_service",
+      "importance_mean": 0.0076420212353717765,
+      "importance_std": 0.0027629548762889626
+    },
+    {
+      "feature": "tech_support",
+      "importance_mean": 0.00619662094086666,
+      "importance_std": 0.0022743245886723837
+    },
+    {
+      "feature": "avg_monthly_spend",
+      "importance_mean": 0.0032684905319178225,
+      "importance_std": 0.002860341069608447
+    },
+    {
+      "feature": "payment_method",
+      "importance_mean": 0.0032004185073240764,
+      "importance_std": 0.0015314157144545892
+    },
+    {
+      "feature": "paperless_billing",
+      "importance_mean": 0.0026380169986309652,
+      "importance_std": 0.002077973499073016
+    },
+    {
+      "feature": "monthly_charges",
+      "importance_mean": 0.0015090805755769376,
+      "importance_std": 0.0014331353934358912
+    }
+  ],
+  "total_seconds": 17.8
+}

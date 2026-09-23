@@ -1,0 +1,44 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: churn
+      POSTGRES_PASSWORD: churn
+      POSTGRES_DB: churn
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U churn"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Trains the model and loads scores + views into Postgres, then exits.
+  loader:
+    build: .
+    command: sh -c "python -m churn.train && python -m churn.db"
+    environment:
+      DATABASE_URL: postgresql+psycopg2://churn:churn@db:5432/churn
+    volumes:
+      - ./models:/app/models
+      - ./reports:/app/reports
+      - ./data/processed:/app/data/processed
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./models:/app/models
+      - ./reports:/app/reports
+    depends_on:
+      loader:
+        condition: service_completed_successfully
+
+volumes:
+  pgdata:
