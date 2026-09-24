@@ -1,5 +1,7 @@
 # Telecom churn and revenue-at-risk prediction
 
+[![ci](https://github.com/Tahatahir-IIR/telecom-churn-revenue/actions/workflows/ci.yml/badge.svg)](https://github.com/Tahatahir-IIR/telecom-churn-revenue/actions/workflows/ci.yml)
+
 Predicts which telecom customers will churn next month and how much revenue that puts at risk over 12 months. Classic scikit-learn models with proper cross-validation, calibrated probabilities, a FastAPI scoring service, PostgreSQL views for a Power BI report, Docker Compose, CI, and a cloud deployment path on Azure Container Apps.
 
 Dataset: IBM Telco Customer Churn, 7,043 customers, 26.5% churn rate. Publicly available, same shape as an operator's monthly customer snapshot.
@@ -139,3 +141,7 @@ Starts Postgres, trains the model, loads the tables and views, then serves the A
 - One snapshot, no time dimension. A production version would train on monthly snapshots and validate on the following month.
 - The revenue formula assumes a constant monthly hazard. Real hazards fall with tenure.
 - No usage or network data (call drops, data volume, complaints), which are usually the strongest churn signals an operator has.
+
+## License
+
+MIT. See [LICENSE](LICENSE). The dataset is IBM's public Telco Customer Churn sample.
