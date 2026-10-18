@@ -2,8 +2,9 @@
 
 Usage:  python -m churn.dashboard_preview
 
-This is a stand-in until the real Power BI screenshot is added. Every panel
-reads a view from the database, so the numbers match what Power BI shows.
+The real report is powerbi/churn_report.pbix; this preview is for machines
+without Power BI Desktop. Every panel reads a view from the database, so the
+numbers match what Power BI shows.
 """
 from __future__ import annotations
 

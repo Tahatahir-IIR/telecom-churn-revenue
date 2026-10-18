@@ -2,7 +2,7 @@
 
 [![ci](https://github.com/Tahatahir-IIR/telecom-churn-revenue/actions/workflows/ci.yml/badge.svg)](https://github.com/Tahatahir-IIR/telecom-churn-revenue/actions/workflows/ci.yml)
 
-Predicts which telecom customers will churn next month and how much revenue that puts at risk over 12 months. Classic scikit-learn models with proper cross-validation, calibrated probabilities, a FastAPI scoring service, PostgreSQL views for a Power BI report, Docker Compose, CI, and a cloud deployment path on Azure Container Apps.
+Predicts which telecom customers will churn next month and how much revenue that puts at risk over 12 months. Classic scikit-learn models with proper cross-validation, calibrated probabilities, a FastAPI scoring service, PostgreSQL views and a four-page Power BI report, Docker Compose, CI, and a cloud deployment path on Azure Container Apps.
 
 Dataset: IBM Telco Customer Churn, 7,043 customers, 26.5% churn rate. Publicly available, same shape as an operator's monthly customer snapshot.
 
@@ -60,11 +60,17 @@ revenue_at_risk_12m  = monthly_charges * 12 - expected_revenue_12m
 
 The high band is 12% of customers and 24% of the revenue at risk, which is where a retention budget should go first.
 
-### Dashboard
+### Power BI report
 
-Preview drawn from the same SQL views the Power BI report uses (`python -m churn.dashboard_preview`). The Power BI layout and DAX measures are in [powerbi/README.md](powerbi/README.md).
+Four pages built in Power BI Desktop on the same SQL views: overview, segments, retention list and model. [powerbi/README.md](powerbi/README.md) walks through each page, the ten DAX measures and how to open the report; [powerbi/churn_report.pdf](powerbi/churn_report.pdf) is a PDF export.
 
-![Dashboard preview](reports/figures/dashboard_preview.png)
+![Power BI overview page](powerbi/screenshots/page1-synthese.png)
+
+![Power BI segments page](powerbi/screenshots/page2-segments.png)
+
+The segments page puts actual and predicted churn side by side for each contract type. They match (42.7% vs 42.7% for month-to-month, 11.3% vs 11.4% for one year, 2.8% vs 3.1% for two years) and stay close on the test customers alone, which is the calibration doing its job.
+
+Without Power BI, `python -m churn.dashboard_preview` draws a static preview of the same panels from the views.
 
 ## Project layout
 
@@ -77,10 +83,11 @@ src/churn/
   revenue.py     expected revenue and revenue-at-risk formulas
   predict.py     inference used by the API
   db.py          load tables and views into PostgreSQL (or SQLite fallback)
-  dashboard_preview.py  static preview of the Power BI pages from the views
+  export_powerbi.py     CSV export of the views, the files the report imports
+  dashboard_preview.py  static preview of the report pages from the views
 api/main.py      FastAPI service: /predict, /predict/batch, /model, /health
 sql/             reference schema and the Power BI views
-powerbi/         how to build the report on top of the views, DAX measures
+powerbi/         the report (.pbix, PDF, screenshots), CSV exports, DAX measures
 deploy/          Azure Container Apps deployment
 tests/           data, formula and API tests
 reports/         metrics.json, feature_importance.csv, figures
@@ -94,6 +101,7 @@ export PYTHONPATH=src:.          # PowerShell: $env:PYTHONPATH="src;."
 
 python -m churn.train            # ~20 s on a laptop, writes models/ and reports/
 python -m churn.db               # SQLite in data/churn.db unless DATABASE_URL is set
+python -m churn.export_powerbi   # CSVs for the Power BI report in powerbi/data/
 pytest -q
 uvicorn api.main:app --reload    # http://127.0.0.1:8000/docs
 ```

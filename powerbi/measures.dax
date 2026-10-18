@@ -1,0 +1,28 @@
+// Measures for the churn report. In Power BI Desktop: select the v_customer_risk table,
+// Home > New measure, paste ONE measure at a time, press Enter.
+
+Customers = COUNTROWS('v_customer_risk')
+
+Churn rate (actual) = AVERAGE('v_customer_risk'[actual_churn])
+
+Churn rate (predicted) = AVERAGE('v_customer_risk'[churn_probability])
+
+Monthly revenue = SUM('v_customer_risk'[monthly_charges])
+
+Revenue at risk 12m = SUM('v_customer_risk'[revenue_at_risk_12m])
+
+Expected revenue 12m = SUM('v_customer_risk'[expected_revenue_12m])
+
+Revenue at risk share = DIVIDE([Revenue at risk 12m], [Monthly revenue] * 12)
+
+High-risk customers = CALCULATE([Customers], 'v_customer_risk'[risk_band] = "high")
+
+High-risk revenue at risk = CALCULATE([Revenue at risk 12m], 'v_customer_risk'[risk_band] = "high")
+
+Test AUC =
+CALCULATE(
+    MAX('model_metrics'[value]),
+    'model_metrics'[model_name] = "selected_calibrated",
+    'model_metrics'[split] = "test",
+    'model_metrics'[metric] = "roc_auc"
+)
